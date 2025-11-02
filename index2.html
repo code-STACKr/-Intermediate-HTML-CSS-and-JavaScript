@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style2.css">
+  <title>CONTACT FORM</title>
+  
+</head>
+<body>
+    <header>
+        <div>
+            <h1>MY CONTACT FORM</h1>
+        </div>
+        <nav class="nav">
+            <a class="button" href="#basics">Get started</a>
+            <a class="button" href="#contact">Contact</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+    <!-- ---------- BASICS CARD ---------- -->
+    <section id="basics" class="card">
+      <div class="grid">
+        <!-- ---------- INTERMEDIATE: CONTACT FORM ---------- -->
+    <section id="contact" class="cards card">
+      <h2>Contact Form</h2>
+      <form id="contactForm" novalidate>
+        <label for="name">Name *</label>
+        <input id="name" name="name" type="text" required />
+        <div id="nameError" class="error" aria-live="polite"></div>
+
+        <label for="email">Email *</label>
+        <input id="email" name="email" type="email" required />
+        <div id="emailError" class="error" aria-live="polite"></div>
+
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <div id="messageError" class="error" aria-live="polite"></div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button type="submit" class="btn">Send</button>
+          <button type="reset" class="btn" style="background:#6aaea9;">Reset</button>
+        </div>
+        <div id="formStatus" style="margin-top:10px;" role="status"></div>
+      </form>
+    </section>
+
+        <aside class="cards card">
+          <h3>Mini Demo: To-do & Gallery</h3>
+          <details class="details">
+            <summary style="cursor:pointer; font-weight:700;">To-Do List</summary>
+            <div style="margin-top:8px;">
+              <input id="todoInput" placeholder="Add a task" type="text" />
+              <div class="todo-list" id="todoList"></div>
+            </div>
+          </details>
+
+          <details class="details">
+            <summary style="cursor:pointer; font-weight:700;">Image Gallery</summary>
+            <div style="margin-top:8px;">
+              <input id="imgInput" placeholder="Add image URL" type="text" />
+              <div class="gallery" id="gallery"></div>
+            </div>
+          </details>
+        </aside>
+      </div>
+    </section>
+
+    
+
+    <!-- ---------- ADVANCED / RESPONSIVE LAYOUT ---------- -->
+    <section class="card">
+      <h2 style="    margin-bottom: -20px;">Responsive Layout (Flexbox & Grid)</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:12px;">
+        <div class="card cards">
+          <h4>Navigation (Flexbox)</h4>
+          <div class="flexnav">
+            <a class="nav-link">Home</a>
+            <a class="nav-link">Portfolio</a>
+            <a class="nav-link">Contact</a>
+            <a class="nav-link">Blog</a>
+          </div>
+        </div>
+        <div class="card cards">
+          <h4>Grid example</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="padding:8px; border-radius:6px; background:#f6fffe;">Item 1</div>
+            <div style="padding:8px; border-radius:6px; background:#f6fffe;">Item 2</div>
+            <div style="padding:8px; border-radius:6px; background:#f6fffe;">Item 3</div>
+            <div style="padding:8px; border-radius:6px; background:#f6fffe;">Item 4</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:18px; text-align:center; color:#5e8b88;">
+      <small>Mini roadmap demo — build and expand these examples to practice.</small>
+    </footer>
+  </div>
+
+   <script>
+
+    // ---------- To-do list ----------
+    (function(){
+      const todoInput = document.getElementById('todoInput');
+      const todoList = document.getElementById('todoList');
+
+      function renderItem(text){
+        const item = document.createElement('div');
+        item.className = 'todo-item';
+        const span = document.createElement('span');
+        span.textContent = text;
+        const remove = document.createElement('button');
+        remove.className = 'btn small danger';
+        remove.textContent = 'Remove';
+        remove.addEventListener('click', () => item.remove());
+        item.appendChild(span);
+        item.appendChild(remove);
+        todoList.prepend(item);
+      }
+
+      // Add on enter
+      todoInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter'){
+          const val = todoInput.value.trim();
+          if (val) { renderItem(val); todoInput.value = ''; }
+        }
+      });
+
+      // Also add when blurred if not empty
+      todoInput.addEventListener('blur', function(){
+        const val = todoInput.value.trim();
+        if (val) { renderItem(val); todoInput.value = ''; }
+      });
+    })();
+
+    // ---------- Image gallery ----------
+    (function(){
+      const imgInput = document.getElementById('imgInput');
+      const gallery = document.getElementById('gallery');
+
+      function renderImage(url){
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'user image';
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '90px';
+        img.style.borderRadius = '6px';
+        img.style.objectFit = 'cover';
+
+        const wrap = document.createElement('div');
+        wrap.style.flex = '1';
+        wrap.style.marginLeft = '8px';
+        wrap.appendChild(img);
+
+        const remove = document.createElement('button');
+        remove.className = 'btn small danger';
+        remove.textContent = 'Remove';
+        remove.addEventListener('click', () => item.remove());
+
+        item.appendChild(wrap);
+        item.appendChild(remove);
+        gallery.prepend(item);
+      }
+
+      imgInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter'){
+          const url = imgInput.value.trim();
+          if (url) { renderImage(url); imgInput.value=''; }
+        }
+      });
+    })();
+
+    // ---------- Contact form validation ----------
+    (function(){
+      const form = document.getElementById('contactForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const messageError = document.getElementById('messageError');
+      const status = document.getElementById('formStatus');
+
+      function validateEmail(email) {
+        // Simple regex for example purposes
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // Reset
+        nameError.textContent = '';
+        emailError.textContent = '';
+        messageError.textContent = '';
+        status.textContent = '';
+
+        let ok = true;
+        if (!nameInput.value.trim()) {
+          nameError.textContent = 'Please enter your name.';
+          ok = false;
+        }
+        if (!emailInput.value.trim()) {
+          emailError.textContent = 'Please enter your email.';
+          ok = false;
+        } else if (!validateEmail(emailInput.value.trim())) {
+          emailError.textContent = 'Please provide a valid email address.';
+          ok = false;
+        }
+        if (!messageInput.value.trim()) {
+          messageError.textContent = 'Please write a message.';
+          ok = false;
+        }
+
+        if (!ok) {
+          status.textContent = 'Please fix the errors above and try again.';
+          status.style.color = '#b72b2b';
+          return;
+        }
+
+        // Simulate successful submission
+        status.style.color = '#0a6f6d';
+        status.textContent = 'Thanks! Your message was sent (simulated).';
+
+        // Optionally reset the form
+        form.reset();
+      });
+    })();
+  </script>
+  
+</body>
+</html>
